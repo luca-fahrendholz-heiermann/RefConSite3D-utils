@@ -2,6 +2,17 @@
 __pycache__/
 *.py[codz]
 *$py.class
+*.pyc
+outputs/*
+!outputs/.gitkeep
+
+
+*.ply
+*.obj
+*.mtl
+*.zip
+*.json
+*.txt
 
 # C extensions
 *.so
