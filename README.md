@@ -1,4 +1,4 @@
-# RefConSite3D Utils
+# RefSite3D Utils
 
 Python GUI utilities for preprocessing, visualization, and quality control of the RefConSite3D dataset.
 
