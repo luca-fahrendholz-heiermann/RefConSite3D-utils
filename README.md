@@ -263,7 +263,7 @@ Fahrendholz-Heiermann, J. L., Wu, C. H., & Brell-Cokcan, S. (2026). RefConSite3D
 
 ## Acknowledgements
 
-The ReStage demonstrator, including the planning models, construction activities, and data acquisition campaigns, was developed within the TARGET-X project. TARGET-X is funded by the Smart Networks and Services Joint Undertaking (SNS JU) under the European Union's Horizon Europe research and innovation programme (Grant Agreement No. 101096614).
+The TARGET-X ReStage demonstrator, including the planning models, construction activities, and data acquisition, was developed within TARGET-X and funded by the Smart Networks and Services Joint Undertaking (SNS JU) under the European Union’s Horizon Europe research and innovation programme (Grant Agreement No. 101096614).
 
-The transformation of the acquired and simulated data into a structured benchmark dataset, including annotation generation, utility script development, and dataset documentation, was carried out within the framework of the Cluster of Excellence CARE. CARE – Climate-Neutral and Resource-Efficient Construction is funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) under Germany's Excellence Strategy – EXC 3115 – 533767731.
+The transformation of the acquired and simulated data into a structured benchmark dataset, including annotation generation, utility script development, and dataset documentation, was carried out within the Cluster of Excellence CARE. CARE - Climate-Neutral and Resource-Efficient Construction is funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) under Germany’s Excellence Strategy – EXC 3115 – 533767731.
 
