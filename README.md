@@ -10,7 +10,7 @@ The repository provides standalone tools for:
 
 The scripts are designed to work directly with the RefConSite3D dataset structure and automatically locate related files such as annotations, planning models, and synthetic point clouds.
 
-All generated outputs are written to the local `outputs/` directory.
+All generated outputs are written to a local `outputs/` directory.
 
 The original dataset files are never modified.
 
@@ -28,12 +28,10 @@ RefConSite3D-utils/
 ├── LICENSE
 ├── requirements.txt
 ├── .gitignore
-├── scripts/
-│   ├── ply_semantic_segmentation_class_splitter_and_colorizer_gui.py
-│   ├── ply_object_knn_extractor_gui.py
-│   └── ply_object_verification_class_colorizer_gui.py
-└── outputs/
-    └── .gitkeep
+└── scripts/
+    ├── ply_semantic_segmentation_class_splitter_and_colorizer_gui.py
+    ├── ply_object_knn_extractor_gui.py
+    └── ply_object_verification_class_colorizer_gui.py
 ```
 
 ## Installation
@@ -60,20 +58,7 @@ Copy the contents of the `scripts/` directory into:
 dataset/utils/
 ```
 
-After copying, the dataset structure should look like:
-
-```text
-dataset/
-├── utils/
-│   ├── ply_semantic_segmentation_class_splitter_and_colorizer_gui.py
-│   ├── ply_object_knn_extractor_gui.py
-│   ├── ply_object_verification_class_colorizer_gui.py
-│   └── outputs/
-```
-
 ### 4. Install the Required Python Packages
-
-Run the following command from the repository root or from the dataset root:
 
 ```bash
 pip install -r requirements.txt
@@ -104,12 +89,12 @@ The RefConSite3D benchmark consists of two sequential tasks:
 1. Target Extraction
 2. Progress Monitoring via Object Verification
 
-The utility scripts provided in this repository support visualization and validation of the corresponding annotations and intermediate results.
+The utility scripts provided in this repository support visualization, preprocessing, and quality control of the corresponding annotations and intermediate results.
 
 ```text
 Full Scene Point Cloud
         ↓
-Semantic Target Extraction
+Semantic Segmentation Splitter
         ↓
 Target Point Cloud
         ↓
@@ -120,119 +105,142 @@ Component-Level Verification
 Construction Progress Assessment
 ```
 
-### 1. Semantic Segmentation Class Splitter and Colorizer
+### 1. `ply_semantic_segmentation_class_splitter_and_colorizer_gui.py`
 
-**Script:** `ply_semantic_segmentation_class_splitter_and_colorizer_gui.py`
-
-This script processes semantic segmentation annotations for the target extraction benchmark.
+This tool processes semantic segmentation annotations.
 
 #### Inputs
 
-- Full scene point cloud (`.ply`)
-- Semantic label file (`.txt`)
+- Full scene point cloud (`*_scene_*.ply`)
+- Semantic label file (`*_semantic_segmentation_labels.txt`)
 
-#### Label Definition
+#### Functionality
 
-- `environment`
-- `ground`
-- `target`
+- Splits the full scene point cloud into three separate point clouds:
+  - `environment`
+  - `ground`
+  - `target`
+- Creates a colorized point cloud for visual inspection.
+
+#### Color Scheme
+
+- Environment: red
+- Ground: green
+- Target: blue
 
 #### Outputs
 
-- `*_environment.ply`
-- `*_ground.ply`
-- `*_target.ply`
-- `*_colored_class.ply`
+- `<scene>_environment.ply`
+- `<scene>_ground.ply`
+- `<scene>_target.ply`
+- `<scene>_colored_class.ply`
 
 #### Purpose
 
-The script is used to:
+This script is used to:
 
-- Validate semantic annotations
-- Visualize class labels
-- Extract the target point cloud for downstream processing
+- Validate semantic segmentation labels
+- Visualize class assignments
+- Generate target-only point clouds for subsequent registration
 
-### 2. KNN Object Extractor
+---
 
-**Script:** `ply_object_knn_extractor_gui.py`
+### 2. `ply_object_knn_extractor_gui.py`
 
-This script extracts scan points corresponding to a selected reference object using a K-nearest-neighbor search.
+This tool extracts candidate scan points corresponding to a selected reference object.
 
 #### Inputs
 
-- Source scene point cloud
-- Reference object point cloud
+- Scan point cloud (`.ply`)
+- Reference object (`.obj` or `.ply`)
 
-#### Outputs
+#### Functionality
 
-- Extracted object point cloud
+- Samples points from OBJ meshes using Poisson-disk sampling.
+- Performs a k-nearest-neighbor search in the scan point cloud.
+- Extracts scan points located within a configurable distance threshold.
+
+#### Parameters
+
+- Number of sample points
+- Number of nearest neighbors (`k`)
+- Maximum distance threshold
+
+#### Output
+
+- `<object_name>_extracted_from_scan.ply`
 
 #### Purpose
 
-The script is used to:
+This script is intended for:
 
-- Isolate object-specific scan data
-- Generate object-level subsets
-- Prepare data for object verification
+- Debugging object correspondences
+- Generating approximate object-level scan subsets
+- Preparing data for object verification
 
-### 3. Object Verification Class Colorizer
+---
 
-**Script:** `ply_object_verification_class_colorizer_gui.py`
+### 3. `ply_object_verification_class_colorizer_gui.py`
 
-This script visualizes object verification labels and creates colorized planning models and synthetic point clouds. fileciteturn8file1L1-L120
+This tool visualizes object verification labels.
 
 #### Inputs
 
-- Scene point cloud (`.ply`)
-- Object verification labels (`.json`)
-- Component OBJ models
+- Scene point cloud (`*_scene_*.ply`)
+- Object verification JSON file (`*_object_verification_labels.json`)
+- Phase-specific component OBJ models
 
-#### Label Definition
+#### Functionality
 
-- `0`: Object not verified (red)
-- `1`: Object verified (green)
+- Loads all component labels from the annotation file.
+- Assigns colors according to verification status.
+- Merges all component meshes into a single colored OBJ model.
+- Generates a sampled and colorized PLY representation.
+
+#### Color Scheme
+
+- Object not verified (`0`): red
+- Object verified (`1`): green
 
 #### Outputs
 
-- Colorized merged OBJ model
-- Material file (`.mtl`)
-- Colorized sampled PLY point cloud
+- `<scene>_object_verification_model_components_colored.obj`
+- `<scene>_object_verification_model_components_colored.mtl`
+- `<scene>_object_verification_model_components_colored.ply`
 
 #### Purpose
 
-The script is used to:
+This script is used to:
 
 - Validate object verification annotations
 - Visualize component installation states
 - Inspect construction progress monitoring results
 
-## Usage
-
-Run a script from the repository root:
-
-```bash
-python scripts/ply_semantic_segmentation_class_splitter_and_colorizer_gui.py
-python scripts/ply_object_knn_extractor_gui.py
-python scripts/ply_object_verification_class_colorizer_gui.py
-```
-
-Each script launches a standalone graphical user interface.
-
 ## Output Directory
 
-All generated files are written to:
+All generated files are written to an automatically created:
 
 ```text
 outputs/
 ```
 
+Each script creates its own output subdirectory, typically named after the processed scene or input file.
+
 The original dataset files are never overwritten.
 
 ## Important Dataset Structure Requirement
 
-The original RefConSite3D folder structure and file names should not be modified.
+The utility scripts are designed to operate directly on the original RefConSite3D dataset structure.
 
-Several utility scripts automatically derive the locations of:
+After cloning this repository, copy the scripts into:
+
+```text
+dataset/utils/
+```
+
+The original dataset folder structure and file names should not be modified.
+
+The scripts automatically infer the locations of related files, such as:
 
 - Annotation files
 - Planning models
@@ -255,5 +263,7 @@ Fahrendholz-Heiermann, J. L., Wu, C. H., & Brell-Cokcan, S. (2026). RefConSite3D
 
 ## Acknowledgements
 
-The RefConSite3D dataset was created within the TARGET-X project and further processed within the framework of the Cluster of Excellence CARE.
+The ReStage demonstrator, including the planning models, construction activities, and data acquisition campaigns, was developed within the TARGET-X project. TARGET-X is funded by the Smart Networks and Services Joint Undertaking (SNS JU) under the European Union's Horizon Europe research and innovation programme (Grant Agreement No. 101096614).
+
+The transformation of the acquired and simulated data into a structured benchmark dataset, including annotation generation, utility script development, and dataset documentation, was carried out within the framework of the Cluster of Excellence CARE. CARE – Climate-Neutral and Resource-Efficient Construction is funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) under Germany's Excellence Strategy – EXC 3115 – 533767731.
 
