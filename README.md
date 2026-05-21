@@ -1,6 +1,6 @@
 # RefSite3D Utils
 
-Python GUI utilities for preprocessing, visualization, and quality control of the RefConSite3D dataset.
+Python GUI utilities for preprocessing, visualization, and quality control of the RefSite3D dataset.
 
 The repository provides standalone tools for:
 
@@ -8,7 +8,7 @@ The repository provides standalone tools for:
 - K-nearest-neighbor-based extraction of target objects from scene point clouds
 - Visualization of object verification labels for BIM-to-scan-based construction progress monitoring
 
-The scripts are designed to work directly with the RefConSite3D dataset structure and automatically locate related files such as annotations, planning models, and synthetic point clouds.
+The scripts are designed to work directly with the RefSite3D dataset structure and automatically locate related files such as annotations, planning models, and synthetic point clouds.
 
 All generated outputs are written to a local `outputs/` directory.
 
@@ -16,14 +16,14 @@ The original dataset files are never modified.
 
 ## Dataset
 
-The RefConSite3D dataset is publicly available on Zenodo:
+The RefSite3D dataset is publicly available on Zenodo:
 
 https://doi.org/10.5281/zenodo.20285732
 
 ## Repository Structure
 
 ```text
-RefConSite3D-utils/
+RefSite3D-utils/
 ├── README.md
 ├── LICENSE
 ├── requirements.txt
@@ -36,7 +36,7 @@ RefConSite3D-utils/
 
 ## Installation
 
-The utility scripts are intended to be copied into the `utils/` directory of the RefConSite3D dataset.
+The utility scripts are intended to be copied into the `utils/` directory of the RefSite3D dataset.
 
 ### 1. Download the Dataset
 
@@ -47,7 +47,7 @@ https://doi.org/10.5281/zenodo.20285732
 ### 2. Clone the Repository
 
 ```bash
-git clone https://github.com/luca-fahrendholz-heiermann/RefConSite3D-utils.git
+git clone https://github.com/luca-fahrendholz-heiermann/RefSite3D-utils.git
 ```
 
 ### 3. Copy the Scripts into the Dataset
@@ -84,7 +84,7 @@ Main dependencies:
 
 ## Processing Workflow and Utility Scripts
 
-The RefConSite3D benchmark consists of two sequential tasks:
+The RefSite3D benchmark consists of two sequential tasks:
 
 1. Target Extraction
 2. Progress Monitoring via Object Verification
@@ -230,7 +230,7 @@ The original dataset files are never overwritten.
 
 ## Important Dataset Structure Requirement
 
-The utility scripts are designed to operate directly on the original RefConSite3D dataset structure.
+The utility scripts are designed to operate directly on the original RefSite3D dataset structure.
 
 After cloning this repository, copy the scripts into:
 
@@ -255,10 +255,10 @@ The source code in this repository is distributed under the MIT License.
 
 ## Citation
 
-If you use the RefConSite3D dataset, please cite:
+If you use the RefSite3D dataset, please cite:
 
 ```text
-Fahrendholz-Heiermann, J. L., Wu, C. H., & Brell-Cokcan, S. (2026). RefConSite3D: A Multi-Phase and Multi-Scenario Dataset from the Reference Construction Site Aachen for Target Extraction, BIM-to-Scan Verification, and Circular Construction Monitoring (Version 1.0.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.20285732
+Fahrendholz-Heiermann, J. L., Wu, C. H., Zöcklein, M., & Brell-Cokcan, S. (2026). RefSite3D: A Multi-Phase and Multi-Scenario Dataset from the Reference Construction Site Aachen for Target Extraction, BIM-to-Scan Verification and Construction Monitoring (Version 1.0.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.20285732
 ```
 
 ## Acknowledgements
